@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Dotenv\Exception\ValidationException;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\JsonResponse;
+
 
 class ForgotPasswordController extends Controller
 {
@@ -19,4 +23,15 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+   
+    protected function sendResetLinkResponse(Request $request, $response)
+    {
+        return response(['message'=> trans($response)]);
+    }
+
+    protected function sendResetLinkFailedResponse(Request $request, $response)
+    {
+        return response(['error'=> trans($response)], 422);
+    }
 }
